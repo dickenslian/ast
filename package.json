@@ -1,0 +1,17 @@
+{
+  "name": "ast",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dickens",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/generator": "^7.5.0",
+    "@babel/parser": "^7.5.0",
+    "@babel/traverse": "^7.5.0",
+    "@babel/types": "^7.5.0"
+  }
+}
