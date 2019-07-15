@@ -4,23 +4,33 @@
 import parser from "@babel/parser";
 import generator from "@babel/generator";
 import t from "@babel/types";
-import traverse from "@babel/traverse";
+import traverser from "@babel/traverse";
 
 const generate = generator.default;
+const traverse = traverser.default;
 
-const code = "";
+const code = `
+define("modules/bdm/index/index", function(require, exports, module) {
+  var $ = require("$");
+  var pageManager = require("pageManager");
+
+});
+`;
 const ast = parser.parse(code);
 
-// BinaryExpression a + b
-const binaryExp = t.binaryExpression("+", t.identifier("a"), t.identifier("b"));
-const returnStatement = t.returnStatement(binaryExp);
+const content = ast.program.body[0].expression.arguments[1].body;
 
-// function body
-const fnBody = t.blockStatement([returnStatement]);
-const params = [t.identifier("a"), t.identifier("b")];
+traverse(ast, {
+  ExpressionStatement(path) {
+    
+    if (path.parent.type === 'Program') {
+      path.insertAfter(content)
+      // 删除原methods
+      path.remove()
+    }
+  }
+})
 
-const fnDeclaraton = t.functionDeclaration(t.identifier("add"), params, fnBody);
-ast.program.body.push(fnDeclaraton);
 
 const output = generate(ast, {}, code);
 
