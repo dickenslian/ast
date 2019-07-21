@@ -9,30 +9,22 @@ import traverser from "@babel/traverse";
 const generate = generator.default;
 const traverse = traverser.default;
 
-const code = `
-define("modules/bdm/index/index", function(require, exports, module) {
-  var $ = require("$");
-  var pageManager = require("pageManager");
-
-});
-`;
+const code = ``;
 const ast = parser.parse(code);
+ 
+// 生成 identifier
+const id = t.identifier('str')
+// 生成 literal
+const literal = t.stringLiteral('hello world')
+// 生成 variableDeclarator
+const declarator = t.variableDeclarator(id, literal)
+ // 生成 variableDeclaration
+const declaration = t.variableDeclaration('const', [declarator])
 
-const content = ast.program.body[0].expression.arguments[1].body;
-
-traverse(ast, {
-  ExpressionStatement(path) {
-    
-    if (path.parent.type === 'Program') {
-      path.insertAfter(content)
-      // 删除原methods
-      path.remove()
-    }
-  }
-})
-
+// 将表达式放入body中
+ast.program.body.push(declaration)
 
 const output = generate(ast, {}, code);
 
-console.log("Input \n", code);
-console.log("Output \n", output.code);
+console.log("input \n", code);
+console.log("output \n", output.code);
