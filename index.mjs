@@ -54,5 +54,5 @@ traverse(ast, {
 
 const output = generate(ast, {}, code);
 
-console.log("Input \n", code);
-console.log("Output \n", output.code);
+console.log("input \n", code);
+console.log("output \n", output.code);
